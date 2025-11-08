@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="UofTCTF 2025 Crypto Write up, 122506号暹罗">
-    <meta name="description" content="UofTCTF 2025  Crypto Write up
-No.1 funny Cipher
-">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;   UofTCTF">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -396,8 +394,19 @@ No.1 funny Cipher
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="UofTCTF-2025-Crypto-Write-up"><a href="#UofTCTF-2025-Crypto-Write-up" class="headerlink" title="UofTCTF 2025  Crypto Write up"></a>UofTCTF 2025  Crypto Write up</h1><hr>
+                <h1 id="nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-up"><a href="#nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-up" class="headerlink" title="&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   UofTCTF 2025  Crypto Write up"></a>&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   UofTCTF 2025  Crypto Write up</h1><hr>
 <h2 id="No-1-funny-Cipher"><a href="#No-1-funny-Cipher" class="headerlink" title="No.1 funny Cipher"></a>No.1 <strong>funny Cipher</strong></h2><p><img src="/picture/1.png"></p>
+<p>首先翻译第一行：一辆独轮车碾压了<strong>flag</strong>，你能修复它吗。As we all konw 很多解密的提示都会在与密文无关叙述之中 </p>
+<p>这里最关键的就是 <strong>wheelbarrow</strong> </p>
+<p>首先，我在浏览器搜索wheelbarrow加密，没找到有用信息。     接着我搜索了<strong>wheelbarrow cipher</strong>，no use </p>
+<p>由于wheelbarrow是一个复合单词，于是我接着搜索<strong>wheel cipher</strong>以及<strong>barrow ciphe</strong>r等等……在使用了许多在线工具解密无果后</p>
+<p>尝试了一种叫 “<strong>Burrows-Wheeler 变换</strong>” 的算法 (它不是一种专门的加密方式，但和wheelbarrow读音相似)</p>
+<p>我用工具对密文执行了 Burrows-Wheeler 变换，输出结果如下：</p>
+<p>LWPMGMP{NRN_XWL_BDWO_MZA_PRIQM_QLKQMRMLMRWD_GRFZAI_NEMAQ_KEGB_MW_600_KG}</p>
+<p>这个字符串看起来更符合 CTF 的 flag 格式，而且它的开头部分 “LWPMGMP” 和 “uoftctf” 长度相同，所以我知道还需要用某种代换密码进一步解密。把它输入代换密码求解工具后，得到：</p>
+<p>uoftctf did you know the first substitution cipher dates back to bc</p>
+<p>现在缺少了数字部分，所以我只需要整理成正确的 flag 格式，最终得到：</p>
+<p>uoftctf{DID_YOU_KNOW_THE_FIRST_SUBSTITUTION_CIPHER_DATES_BACK_TO_600_BC}</p>
 
                 
             </div>
