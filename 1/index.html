@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="UofTCTF 2025 Crypto Write up, 122506号暹罗">
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;   UofTCTF">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  UofTCTF 2025  ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -389,13 +389,15 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-up"><a href="#nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-up" class="headerlink" title="&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   UofTCTF 2025  Crypto Write up"></a>&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   UofTCTF 2025  Crypto Write up</h1><hr>
-<h2 id="No-1-Funny-Cipher"><a href="#No-1-Funny-Cipher" class="headerlink" title="No.1 Funny Cipher"></a>No.1 <strong>Funny Cipher</strong></h2><p><img src="/picture/1.png"></p>
+                <h1 id="nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-Up"><a href="#nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-UofTCTF-2025-Crypto-Write-Up" class="headerlink" title="&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  UofTCTF 2025  Crypto Write Up"></a>&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  UofTCTF 2025  Crypto Write Up</h1><h2 id="No-1-Funny-Cipher"><a href="#No-1-Funny-Cipher" class="headerlink" title="No.1 Funny Cipher"></a>No.1 <strong>Funny Cipher</strong></h2><p><img src="/picture/1.png"></p>
 <p>密文：<strong>60_ZMZ_GBWKNREM_KRA__LQM}WEPRGQL__Q_{RWW_M_KIAGPMNMRXDLM_FMWLDQ0BOIAMNPG</strong></p>
 <p>首先翻译第一行：一辆独轮车碾压了<strong>flag</strong>，你能修复它吗。众所周知，很多解密的提示都会在与密文无关叙述之中 </p>
 <p>这里最关键的就是 “<strong>wheelbarrow</strong> ”</p>
@@ -415,6 +417,43 @@
 <p>得到<strong>u of t c tfdid you know the first substitution cipher dates back to bc</strong></p>
 <p>现在缺少了原来的符号样式，整理成正确的 flag 格式，最终得到：</p>
 <p><strong>uoftctf{DID_YOU_KNOW_THE_FIRST_SUBSTITUTION_CIPHER_DATES_BACK_TO_600_BC}</strong></p>
+<hr>
+<hr>
+<hr>
+<h2 id="No-2-Enchanted-Oracle"><a href="#No-2-Enchanted-Oracle" class="headerlink" title="No.2 Enchanted Oracle"></a>No.2 Enchanted Oracle</h2><p><img src="/picture/4.png"></p>
+<p>Only the most worthy can decrypt the enchanted oracle. Can you?</p>
+<p>译：只有最配得上的人才能解密魔法神谕，你行吗？    ——————很好的挑衅</p>
+<p><strong>Let‘s begin！</strong></p>
+<p>运行py文件：</p>
+<p><img src="/picture/5.png"></p>
+<p>这是一个 AES-CBC 加密解密的交互界面  提供<strong>获取密文</strong>和<strong>解密密文</strong>的功能</p>
+<p>显然本题主要考察<strong>AES-CBC 字节翻转加密</strong></p>
+<p>再来看看源码：</p>
+<p><img src="/picture/6.png"></p>
+<p>可看出：</p>
+<p>选择 <strong>1</strong> 后，它会读取 <strong>flag.txt</strong>，用 AES-CBC 加密，并输出一个 Base64 编码的密文。这个密文是 <strong>IV + Ciphertext</strong>的形式</p>
+<p>选择 <strong>2</strong> 后，它会要求你输入一个 Base64 编码的密文。它会尝试用 AES-CBC 解密</p>
+<p>如果解密成功（填充正确），它会检查明文是否是 <strong>I am an authenticated admin, please give me the flag</strong></p>
+<p>如果是，就输出 Flag；否则，输出 <strong>Unknown command!</strong>。如果解密失败（填充错误），它会输出 <strong>Error!</strong></p>
+<hr>
+<p>简单来说 我们需要通过一开始获得的密文推出<strong>IV</strong>(初始向量)，利用这个 IV 重复多次来构造一个假的、但结构正确的密文，使这个密文解密后明文为</p>
+<p>’I am an authenticated admin, please give me the flag‘</p>
+<hr>
+<p>这是典型的<strong>Padding Oracle</strong> (<strong>填充预言机</strong>)场景：</p>
+<p>服务器在解密时，会明确地告诉我们填充是否正确与否，</p>
+<p>并且可以随意构造密文并发送给服务器解密</p>
+<p>因此利用 Padding Oracle 攻击，我们可以在不知道密钥的情况下，</p>
+<p>通过精心构造密文，来让服务器解密出我们想要的任何明文。</p>
+<p>因此作以下脚本：</p>
+<p><img src="/picture/7.png"></p>
+<p>该脚本通过 </p>
+<ul>
+<li>构造攻击用的密文块</li>
+<li>逐块、逐字节爆破中间态</li>
+<li>构造恶意密文块</li>
+<li>发送恶意密文，获取 Flag</li>
+</ul>
+<p>最终得到flag</p>
 <hr>
 
                 
@@ -606,6 +645,9 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->

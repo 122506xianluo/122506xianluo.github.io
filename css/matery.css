@@ -100,6 +100,56 @@ blockquote {
     background-color: rgba(66, 185, 131, .1);
 }
 
+/* 代码块基础样式 */
+pre {
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    background: #282c34;
+    border-radius: 8px;
+    overflow-x: auto;
+    position: relative;
+}
+
+/* 代码字体和颜色 */
+code {
+    font-family: "Consolas", "Monaco", monospace;
+    font-size: 0.9rem;
+    color: #f8f8f2;
+    background: transparent;
+}
+
+/* 行号样式（如需显示行号） */
+.line-numbers {
+    padding-right: 1rem !important;
+    border-right: 2px solid #606366;
+}
+
+/* 代码语言标签（主题配置中开启 lang: true 后生效） */
+.code_lang {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #bbb;
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+/* 复制按钮（主题配置中开启 copy: true 后生效） */
+.code_copy {
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    color: #bbb;
+    cursor: pointer;
+    z-index: 1;
+}
+
+
+
+
+
+
+
 pre {
     padding: 2rem 1rem 1rem 3rem !important;
     border-radius: 0.35rem;
