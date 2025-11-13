@@ -488,6 +488,66 @@
 <p>上代码：</p>
 <p><img src="/picture/11.png"></p>
 <p>终于得到结果了🥳🥳🥳🥳🥳🥳</p>
+<hr>
+<h2 id="No-4-causation"><a href="#No-4-causation" class="headerlink" title="No.4 causation"></a>No.4 causation</h2><p><img src="/picture/41.png"></p>
+<p>翻译：这是第一个随机数生成器的缺陷！！！</p>
+<p>看来又来考<strong>伪随机数生成器</strong>（<strong>PRNG</strong>）了，与第三题类似</p>
+<p>看看源码：</p>
+<p><img src="/picture/42.png"></p>
+<p>结合运行内容：</p>
+<p><img src="/picture/43.png"></p>
+<blockquote>
+<p>代码功能：</p>
+</blockquote>
+<p>首先创造了叫<strong>PRNG</strong>的类用于生成<strong>伪随机数</strong></p>
+<p>然后分别定义<strong>seed列表</strong>与<strong>salt列表</strong>(都包含 16 个随机的 64 位整数)</p>
+<p>再根据<code>seed2[i] = seed[i] ^ salt[i]</code> (两个列表各项做异或运算)定义了<strong>seed2列表</strong></p>
+<p>然后根据<strong>seed</strong>以及<strong>seed2</strong>用<strong>PRNG</strong>制造伪随机数分别存储在<strong>rng1</strong>以及<strong>rng2</strong></p>
+<p>由于<code>PRNG.next()</code>可以<em><strong>无限遍历</strong></em>(有类似指针的结构)</p>
+<p>随后提示输入 50 个 “<strong>调用序列点</strong>”（即你想猜测的第几次遍历，比如 1、5、10 等)</p>
+<p>我们先输入最简单的位置，即0-49位：</p>
+<p><img src="/picture/44.png"></p>
+<p>随后 系统给予一个对应位置<strong>rng1</strong>的值(例如已经给我们了第一个rng1&#x3D;2)，让我们猜对应<strong>rng2</strong>的值</p>
+<p>50个之中猜对了<strong>20个及以上</strong>就能得到flag</p>
+<p>这是源码的解释</p>
+<blockquote>
+<p>分析解题方法：</p>
+</blockquote>
+<p>可以看到程序开头就给了我们<strong>salt列表</strong></p>
+<p>又后来会一步步给<strong>rng1</strong>的值，而<strong>rng1</strong>又是由<strong>seed列表</strong>生成中的</p>
+<p>根据<code>seed2[i] = seed[i] ^ salt[i]</code>，</p>
+<p>我们就能逆向出<strong>seed2列表</strong>生成的与<strong>rng1</strong>一一对应的<strong>rng2</strong>值</p>
+<blockquote>
+<p>理论存在，实践开始：</p>
+</blockquote>
+<p>………………………………………………</p>
+<p>………………………………………………</p>
+<p>经过几个小时后 我意识到这种解题方法是不可行的😭😭😭😭</p>
+<p>这是因为</p>
+<ol>
+<li><strong>rng1</strong>的输出（0~10）信息量太少，无法逆向出它 1024 位的完整内部状态</li>
+<li><code>PRNG.next()</code> 是单向操作，无法从输出反推初始状态</li>
+</ol>
+<p>所以 我们只能另寻他路：</p>
+<blockquote>
+<p>解题思路2</p>
+</blockquote>
+<p>由于<strong>seed</strong>是由<code>seed = [secrets.randbits(64) for i in range(16)]</code>生成的</p>
+<p>虽然这样看<strong>seed</strong>生成列表有<strong>2^1024 种</strong>可能 </p>
+<p>但由于<strong>seed</strong>与<strong>seed2</strong>之间的运算仅为异或计算 且<strong>rng1</strong>的输出范围小</p>
+<p>所以我们能应用概率统计来做</p>
+<p>因为<strong>salt</strong>是确定的 我们可以自己生成<strong>seed</strong>(生成200组)</p>
+<p>然后让他们遍历至少<em><strong>50000</strong></em>遍，统计在第<strong>k</strong>遍时<code>rng1=a(0~10)→rng=b</code>的概率</p>
+<p>挑选出 在200个种子内都有&gt;&#x3D;40%的概率猜对rng2的 遍历次数s∈k</p>
+<p>这样挑选出50个s作为<strong>points</strong>输入<strong>调用序列点</strong>中 </p>
+<p>再根据rng1的值输入高概率的rng2</p>
+<p>这样50个猜对概率为40%就能有20个正确的了</p>
+<p>嘿嘿~</p>
+<p>代码：</p>
+<p><img src="/picture/45.png"><br><img src="/picture/46.png"><br><img src="/picture/47.png"></p>
+<p>然后再手动对应输入链接就可以啦</p>
+<p>得到flag：<strong><code>uoftctf{they&#39;re_c0rrelated_..._Rng1_D0esnt_4ffect_rng2}</code></strong></p>
+<p>光复现就花了1天，难以想象当时怎么会有人做得出来😮</p>
 
                 
             </div>
