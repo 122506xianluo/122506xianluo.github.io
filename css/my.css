@@ -1,1 +1,19 @@
 /* Here is your custom css styles. */
+/* 干掉那恶心的白色阴影 + 顺便再微调一下让字体更清爽 */
+code[class*="language-"],
+pre[class*="language-"],
+.token {
+    text-shadow: none !important; /* 核心：干掉白色阴影 */
+    font-weight: 500 !important; /* 可选：字重适中，不细不粗 */
+    letter-spacing: 0.3px !important; /* 可选：字间距微调，更舒服 */
+}
+    /* 彻底消灭 = * () >> 等符号的白色半透明背景 */
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .token.variable,
+    .token.punctuation,
+    .token.property {
+        background: transparent !important; /* 核心！全部透明 */
+        background-color: transparent !important;
+    }

@@ -5,10 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="122506号暹罗">
-    <meta name="description" content="                     UofTCTF 2025  Crypto Write Up
-No.1 Funny Cipher
-
-密文：60_ZMZ_GBWKNREM_KRA__LQM}WEPRGQL__Q_{RWW_M_KIAG">
+    <meta name="description" content="                N1CTF Junior 3rd(Jeopardy)                
+No.1  CheckIn
+看看源码：
+import os
+from Crypto.Util.number import ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -337,7 +338,7 @@ No.1 Funny Cipher
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/2.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -378,7 +379,7 @@ No.1 Funny Cipher
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-11-07
+                    2025-11-22
                 </div>
                 
 
@@ -402,194 +403,103 @@ No.1 Funny Cipher
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1>                     UofTCTF 2025  Crypto Write Up</h1>
-<h2 id="No-1-Funny-Cipher">No.1 <strong>Funny Cipher</strong></h2>
-<p><img src="/picture/1.png" alt=""></p>
-<p>密文：<strong>60_ZMZ_GBWKNREM_KRA__LQM}WEPRGQL__Q_{RWW_M_KIAGPMNMRXDLM_FMWLDQ0BOIAMNPG</strong></p>
-<p>首先翻译第一行：一辆独轮车碾压了<strong>flag</strong>，你能修复它吗。众所周知，很多解密的提示都会在与密文无关叙述之中</p>
-<p>这里最关键的就是 “<strong>wheelbarrow</strong> ”</p>
-<p>首先，我在浏览器搜索<strong>wheelbarrow加密</strong>，没找到有用信息。     接着我搜索了<strong>wheelbarrow cipher</strong>，no use</p>
-<p>由于wheelbarrow是一个复合单词，于是我接着搜索<strong>wheel cipher</strong>以及<strong>barrow ciphe</strong>r等等…</p>
-<p>在使用了许多在线工具解密无果后</p>
-<p>尝试了一种叫 “<strong>Burrows-Wheeler 变换</strong>” 的算法 (它不是一种专门的加密方式，但和wheelbarrow读音相似)</p>
-<p>我用<a target="_blank" rel="noopener" href="https://www.dcode.fr/burrows-wheeler-transform" title="在线BWT解密工具">在线工具</a>对密文执行了 Burrows-Wheeler 变换:</p>
-<p><img src="/picture/2.png" alt=""></p>
-<p>匹配最佳符合格式输出结果如下：</p>
-<p><strong>LWPMGMP{NRN_XWL_BDWO_MZA_PRIQM_QLKQMRMLMRWD_GRFZAI_NEMAQ_KEGB_MW_600_KG}</strong></p>
-<p>注意到适合的flag格式开头应为uoftctf      刚好它的开头部分 “LWPMGMP” 和 “uoftctf” 长度相同</p>
-<p>所以还需要进一步解密</p>
-<p>已知|l→u|w→o|p→f|m→t|g→c|m→t|p→f|</p>
-<p>在尝试许多古典密码解密后，我利用<a href="(https://quipqiup.com/)">代换密码求解在线网站</a>求解：</p>
-<p><img src="/picture/3.png" alt=""></p>
-<p>得到<strong>u of t c tfdid you know the first substitution cipher dates back to bc</strong></p>
-<p>现在缺少了原来的符号样式，整理成正确的 flag 格式，最终得到：</p>
-<p><strong>uoftctf{DID_YOU_KNOW_THE_FIRST_SUBSTITUTION_CIPHER_DATES_BACK_TO_600_BC}</strong></p>
-<hr>
-<hr>
-<hr>
-<h2 id="No-2-Enchanted-Oracle">No.2 Enchanted Oracle</h2>
-<p><img src="/picture/4.png" alt=""></p>
-<p>Only the most worthy can decrypt the enchanted oracle. Can you?</p>
-<p>译：只有最配得上的人才能解密魔法神谕，你行吗？    ——————很好的挑衅</p>
-<p><strong>Let‘s begin！</strong></p>
-<p>运行py文件：</p>
-<p><img src="/picture/5.png" alt=""></p>
-<p>这是一个 AES-CBC 加密解密的交互界面  提供<strong>获取密文</strong>和<strong>解密密文</strong>的功能</p>
-<p>显然本题主要考察<strong>AES-CBC 字节翻转加密</strong></p>
-<p>再来看看源码：</p>
-<p><img src="/picture/6.png" alt=""></p>
-<p>可看出：</p>
-<p>选择 <strong>1</strong> 后，它会读取 <strong>flag.txt</strong>，用 AES-CBC 加密，并输出一个 Base64 编码的密文。这个密文是 <strong>IV + Ciphertext</strong>的形式</p>
-<p>选择 <strong>2</strong> 后，它会要求你输入一个 Base64 编码的密文。它会尝试用 AES-CBC 解密</p>
-<p>如果解密成功（填充正确），它会检查明文是否是 <strong>I am an authenticated admin, please give me the flag</strong></p>
-<p>如果是，就输出 Flag；否则，输出 <strong>Unknown command!</strong>。如果解密失败（填充错误），它会输出 <strong>Error!</strong></p>
-<hr>
-<p>简单来说 我们需要通过一开始获得的密文推出<strong>IV</strong>(初始向量)，利用这个 IV 重复多次来构造一个假的、但结构正确的密文，使这个密文解密后明文为</p>
-<p>’I am an authenticated admin, please give me the flag‘</p>
-<hr>
-<p>这是典型的<strong>Padding Oracle</strong> (<strong>填充预言机</strong>)场景：</p>
-<p>服务器在解密时，会明确地告诉我们填充是否正确与否，</p>
-<p>并且可以随意构造密文并发送给服务器解密</p>
-<p>因此利用 Padding Oracle 攻击，我们可以在不知道密钥的情况下，</p>
-<p>通过精心构造密文，来让服务器解密出我们想要的任何明文。</p>
-<p>因此作以下脚本：</p>
-<p><img src="/picture/7.png" alt=""></p>
-<p>该脚本通过</p>
-<ul>
-<li>构造攻击用的密文块</li>
-<li>逐块、逐字节爆破中间态</li>
-<li>构造恶意密文块</li>
-<li>发送恶意密文，获取 Flag</li>
-</ul>
-<p>最终得到flag</p>
-<hr>
-<h2 id="No-3-shuffler">No.3    shuffler</h2>
-<p><img src="/picture/8.png" alt=""></p>
-<p>翻译：你听说过会给数字洗牌的面包师吗？</p>
-<p>显然可以看出这题考察<strong>Baker 变换（Baker Map）</strong>————</p>
-<p>是一种经典的混沌映射，常用于构造<strong>伪随机数生成器（PRNG）</strong></p>
-<p>运行：</p>
-<p><img src="/picture/9.png" alt=""></p>
-<p>先给予了我们被加密过的flag：</p>
-<p><code>e38a86c361718fdc984d5d2cecd1b15ba5340428ec36575427af032356a386fbe119c0a579d598b30914408b9420c2c9</code></p>
-<p>显然要找到其<strong>加密方法</strong>以及<strong>密钥</strong></p>
-<p>根据运行提示：<strong>给我一个数字序列的上限值，我会帮你打乱它！</strong></p>
-<p>因此我们要输入一些值 然后根据给出的结果找到规律来找到密钥</p>
-<p>其中已知要用到<strong>Baker 变换</strong></p>
-<p>我们试着输入1，2，3，4，5…30…</p>
-<p>知道30后会显示<code>That's too much for me!</code></p>
-<p><code>1[1]</code><br>
-<code>2[2, 1]</code><br>
-<code>3[1, 3, 2]</code><br>
-<code>4[1, 3, 2, 4]</code><br>
-<code>5[5, 2, 4, 1, 3]</code><br>
-<code>6[1, 5, 6, 2, 4, 3]</code><br>
-<code>7[5, 3, 4, 1, 2, 7, 6]</code><br>
-<code>8[1, 6, 7, 8, 3, 5, 4, 2]</code><br>
-<code>9[3, 2, 8, 4, 5, 6, 7, 1, 9]</code><br>
-<code>10[8, 5, 9, 1, 4, 6, 3, 2, 10, 7]</code><br>
-<code>11[8, 3, 5, 6, 10, 9, 11, 7, 4, 2, 1]</code><br>
-<code>12[9, 12, 5, 2, 3, 8, 4, 6, 11, 10, 7, 1]</code><br>
-<code>13[7, 4, 9, 11, 1, 8, 6, 13, 12, 3, 10, 2, 5]</code><br>
-<code>14[8, 6, 2, 14, 7, 3, 4, 1, 9, 13, 10, 11, 12, 5]</code><br>
-<code>15[1, 5, 9, 15, 7, 14, 10, 3, 12, 8, 11, 13, 2, 4, 6]</code><br>
-<code>16[3, 12, 5, 13, 1, 16, 6, 15, 2, 11, 10, 4, 8, 9, 14, 7]</code><br>
-<code>17[16, 1, 10, 12, 5, 2, 15, 6, 8, 4, 7, 14, 11, 3, 13, 9, 17]</code><br>
-<code>18[1, 6, 17, 15, 8, 4, 16, 13, 12, 11, 5, 10, 14, 3, 9, 18, 2, 7]</code><br>
-<code>19[8, 2, 7, 15, 17, 10, 9, 12, 16, 5, 13, 11, 1, 3, 4, 19, 14, 6, 18]</code><br>
-<code>20[19, 10, 7, 2, 13, 9, 16, 15, 20, 8, 6, 4, 17, 18, 11, 3, 1, 14, 5, 12]</code><br>
-<code>21[14, 15, 11, 20, 10, 7, 9, 1, 19, 8, 5, 13, 2, 6, 18, 3, 4, 21, 12, 17, 16]</code><br>
-<code>22[17, 18, 3, 11, 7, 13, 20, 6, 8, 14, 21, 16, 22, 4, 12, 1, 10, 19, 2, 5, 15, 9]</code><br>
-<code>23[15, 17, 20, 9, 7, 3, 23, 13, 6, 10, 18, 22, 8, 19, 2, 14, 21, 5, 16, 12, 4, 11, 1]</code><br>
-<code>24[9, 6, 19, 12, 13, 11, 4, 24, 8, 2, 14, 20, 21, 23, 5, 22, 18, 17, 16, 10, 15, 1, 7, 3]</code><br>
-<code>25[12, 14, 17, 8, 7, 23, 13, 25, 24, 6, 11, 21, 19, 10, 9, 2, 1, 18, 3, 5, 16, 15, 4, 22, 20]</code><br>
-<code>26[20, 2, 11, 16, 26, 23, 3, 7, 21, 5, 1, 13, 15, 17, 8, 12, 4, 10, 19, 18, 24, 6, 14, 9, 22, 25]</code><br>
-<code>27[19, 12, 7, 11, 27, 8, 15, 21, 1, 2, 5, 20, 23, 24, 25, 16, 22, 18, 4, 14, 17, 13, 10, 9, 6, 3, 26]</code><br>
-<code>28[16, 7, 19, 12, 15, 1, 9, 2, 25, 28, 22, 27, 17, 8, 20, 23, 10, 3, 14, 26, 11, 18, 24, 5, 6, 4, 21, 13]</code><br>
-<code>29[8, 2, 27, 12, 17, 16, 18, 10, 6, 23, 1, 13, 11, 24, 19, 14, 4, 15, 20, 25, 26, 22, 29, 28, 7, 9, 3,5, 21]</code><br>
-<code>30[8, 13, 6, 20, 25, 17, 27, 19, 26, 24, 5, 16, 7, 9, 2, 11, 12, 1, 3, 22, 18, 28, 30, 21, 10, 4, 14, 15, 23, 29]</code><br>
-<code>31That's too much for me!</code></p>
-<p>还是太难看出规律了 我们还是看看源码吧😭（已奔溃）</p>
-<p><img src="/picture/10.png" alt=""></p>
-<p>这下就清楚了密钥是怎么来的：</p>
-<ol>
-<li>服务器初始化 <code>PRNG</code> 时，使用固定的初始状态 <code>(initial_x, initial_y)</code>（分数形式）；</li>
-<li>调用 <code>PRNG.random_number(2**100)</code> 生成一个 100 位的整数随机数；</li>
-<li>对这个随机数做 <strong>SHA256 哈希</strong>（输出 32 字节），作为 AES-256 的加密密钥；</li>
-<li>用该密钥通过 <strong>AES-ECB 模式</strong>加密原始 flag，得到这串十六进制密文。 #这样就知道加密模式是AES-ECB 模式啦</li>
-</ol>
-<p>因此要得到密钥 需要：</p>
-<ol>
-<li>拿到服务器的 <code>initial_x</code> 和 <code>initial_y</code>，就能用代码模拟生成完全相同的 100 位随机数；</li>
-<li>用相同的随机数做 <strong>SHA256 哈希</strong>，得到与服务器一致的 <strong>AES 密钥</strong>；</li>
-<li>用该密钥解密这串十六进制密文，最终还原出原始 flag。</li>
-</ol>
-<p>上代码：</p>
-<p><img src="/picture/11.png" alt=""></p>
-<p>终于得到结果了🥳🥳🥳🥳🥳🥳</p>
-<hr>
-<h2 id="No-4-causation">No.4 causation</h2>
-<p><img src="/picture/41.png" alt=""></p>
-<p>翻译：这是第一个随机数生成器的缺陷！！！</p>
-<p>看来又来考<strong>伪随机数生成器</strong>（<strong>PRNG</strong>）了，与第三题类似</p>
+                <h1>                N1CTF Junior 3rd(Jeopardy)                </h1>
+<h2 id="No-1-CheckIn">No.1  CheckIn</h2>
 <p>看看源码：</p>
-<p><img src="/picture/42.png" alt=""></p>
-<p>结合运行内容：</p>
-<p><img src="/picture/43.png" alt=""></p>
-<blockquote>
-<p>代码功能：</p>
-</blockquote>
-<p>首先创造了叫<strong>PRNG</strong>的类用于生成<strong>伪随机数</strong></p>
-<p>然后分别定义<strong>seed列表</strong>与<strong>salt列表</strong>(都包含 16 个随机的 64 位整数)</p>
-<p>再根据<code>seed2[i] = seed[i] ^ salt[i]</code> (两个列表各项做异或运算)定义了<strong>seed2列表</strong></p>
-<p>然后根据<strong>seed</strong>以及<strong>seed2</strong>用<strong>PRNG</strong>制造伪随机数分别存储在<strong>rng1</strong>以及<strong>rng2</strong></p>
-<p>由于<code>PRNG.next()</code>可以<em><strong>无限遍历</strong></em>(有类似指针的结构)</p>
-<p>随后提示输入 50 个 “<strong>调用序列点</strong>”（即你想猜测的第几次遍历，比如 1、5、10 等)</p>
-<p>我们先输入最简单的位置，即0-49位：</p>
-<p><img src="/picture/44.png" alt=""></p>
-<p>随后 系统给予一个对应位置<strong>rng1</strong>的值(例如已经给我们了第一个rng1=2)，让我们猜对应<strong>rng2</strong>的值</p>
-<p>50个之中猜对了<strong>20个及以上</strong>就能得到flag</p>
-<p>这是源码的解释</p>
-<blockquote>
-<p>分析解题方法：</p>
-</blockquote>
-<p>可以看到程序开头就给了我们<strong>salt列表</strong></p>
-<p>又后来会一步步给<strong>rng1</strong>的值，而<strong>rng1</strong>又是由<strong>seed列表</strong>生成中的</p>
-<p>根据<code>seed2[i] = seed[i] ^ salt[i]</code>，</p>
-<p>我们就能逆向出<strong>seed2列表</strong>生成的与<strong>rng1</strong>一一对应的<strong>rng2</strong>值</p>
-<blockquote>
-<p>理论存在，实践开始：</p>
-</blockquote>
-<p>………………………………………………</p>
-<p>………………………………………………</p>
-<p>经过几个小时后 我意识到这种解题方法是不可行的😭😭😭😭</p>
-<p>这是因为</p>
-<ol>
-<li><strong>rng1</strong>的输出（0~10）信息量太少，无法逆向出它 1024 位的完整内部状态</li>
-<li><code>PRNG.next()</code> 是单向操作，无法从输出反推初始状态</li>
-</ol>
-<p>所以 我们只能另寻他路：</p>
-<blockquote>
-<p>解题思路2</p>
-</blockquote>
-<p>由于<strong>seed</strong>是由<code>seed = [secrets.randbits(64) for i in range(16)]</code>生成的</p>
-<p>虽然这样看<strong>seed</strong>生成列表有<strong>2^1024 种</strong>可能</p>
-<p>但由于<strong>seed</strong>与<strong>seed2</strong>之间的运算仅为异或计算 且<strong>rng1</strong>的输出范围小</p>
-<p>所以我们能应用概率统计来做</p>
-<p>因为<strong>salt</strong>是确定的 我们可以自己生成<strong>seed</strong>(生成200组)</p>
-<p>然后让他们遍历至少<em><strong>50000</strong></em>遍，统计在第<strong>k</strong>遍时<code>rng1=a(0~10)→rng=b</code>的概率</p>
-<p>挑选出 在200个种子内都有&gt;=40%的概率猜对rng2的 遍历次数s∈k</p>
-<p>这样挑选出50个s作为<strong>points</strong>输入<strong>调用序列点</strong>中</p>
-<p>再根据rng1的值输入高概率的rng2</p>
-<p>这样50个猜对概率为40%就能有20个正确的了</p>
-<p>嘿嘿~</p>
-<p>代码：</p>
-<p><img src="/picture/45.png" alt=""><br>
-<img src="/picture/46.png" alt=""><br>
-<img src="/picture/47.png" alt=""></p>
-<p>然后再手动对应输入链接就可以啦</p>
-<p>得到flag：<strong><code>uoftctf{they're_c0rrelated_..._Rng1_D0esnt_4ffect_rng2}</code></strong></p>
-<p>光复现就花了1天，难以想象当时怎么会有人做得出来😮</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> secret <span class="token keyword">import</span> FLAG
+
+p<span class="token punctuation">,</span> q <span class="token operator">=</span> getPrime<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">)</span><span class="token punctuation">,</span> getPrime<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">)</span>
+n <span class="token operator">=</span> p <span class="token operator">*</span> q
+phi <span class="token operator">=</span> <span class="token punctuation">(</span>p <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>q <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+e <span class="token operator">=</span> <span class="token number">65537</span>
+
+r <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token string">b'n1junior2025'</span><span class="token punctuation">)</span>
+gift <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2025</span> <span class="token operator">*</span> p <span class="token operator">+</span> r <span class="token operator">*</span> r<span class="token punctuation">)</span> <span class="token operator">*</span> p <span class="token operator">%</span> phi<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">750</span>
+
+msg <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span>FLAG<span class="token punctuation">)</span>
+ct <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> e<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"n = </span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"e = </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"ct = </span><span class="token interpolation"><span class="token punctuation">&#123;</span>ct<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"gift = </span><span class="token interpolation"><span class="token punctuation">&#123;</span>gift<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">'''
+n = 127060392619341060272126983366487069092712215979664340339428955285201267724168574813227106020122399594060458777939446978632526348867806863618885370221957087197582864380885199290793062293120324984868138488667017882272415668310242448870352699380394381756621677031459335310964085476227148301120850021800822495119
+e = 65537
+ct = 18305235107479382231970252522433686185039231184629854177334609960907102735540326234277108553640185845164498239822263821349544015918443334769445559622730315115384134147808359107914969010678607157349844717217781801237935737980608575612421610972048739840839726108493286994232100086338529591086935374295281642738
+gift = 8312456126096895497368692810699639462746223116345115761188530231045483000989605820
+'''</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这是一道经典<strong>RSA</strong>的改编</p>
+<p><strong>msg</strong>是明文，即为flag；</p>
+<p><strong>ct</strong>是密文，已给出；</p>
+<p><strong>e=65537</strong>经典公钥已给出；</p>
+<p><strong>n</strong>是一个1024bit的数，由<strong>p</strong>和<strong>q</strong>两个随机512bit素数相乘得到</p>
+<p>利用<strong>gift</strong>(286bit)这一关键泄露信息解出<strong>p</strong>算出<strong>phi</strong>即可根据RSA的私钥计算方法解出flag</p>
+<p>现在最关键的是这一行:</p>
+<p><strong><code>gift = ((2025 * p + r * r) * p % phi) &gt;&gt; 750</code></strong></p>
+<p><strong>r</strong>由字符串生成，可直接得出；所以这里就变成了一个可以解出p的方程；</p>
+<p><strong>gift</strong>有286位，理论上可解出<strong>p</strong>的高286位，剩下的512-286=226可以用<strong>Coppersmith</strong>直接得出</p>
+<p>开始构造多项式：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token number">1</span><span class="token punctuation">.</span>gift <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> phi<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">750</span>       <span class="token comment">#原式</span>
+<span class="token number">2</span><span class="token punctuation">.</span>gift <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> n <span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">750</span>   
+   <span class="token comment">#由于phi=(p - 1) * (q - 1) ≈ n = p * q 并且gift已经被截去低位750位</span>
+   <span class="token comment">#所以可以用n代替phi计算 依然可以算出p高位</span>
+<span class="token number">3</span><span class="token punctuation">.</span>gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> n           <span class="token comment">#换为gift左移</span>
+<span class="token number">4</span><span class="token punctuation">.</span>gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">-</span> k<span class="token operator">*</span>n         <span class="token comment">#改写余数方程 k为倍数</span>
+<span class="token number">5</span><span class="token punctuation">.</span>f<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>x <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>x <span class="token operator">-</span> k<span class="token operator">*</span>n <span class="token operator">-</span> gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span>  <span class="token comment">#构造完成 解出根即为p</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就可以使用<strong>Coppersmith</strong>还原p：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">G <span class="token operator">=</span> gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span>
+PR<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>RealField<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> k <span class="token keyword">in</span> trange<span class="token punctuation">(</span><span class="token number">2200</span><span class="token punctuation">,</span> <span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    f <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>x <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>x <span class="token operator">-</span> k<span class="token operator">*</span>n <span class="token operator">-</span> G
+    res <span class="token operator">=</span> f<span class="token punctuation">.</span>roots<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    res <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>res<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">230</span> <span class="token operator">&lt;&lt;</span> <span class="token number">230</span>
+    P<span class="token punctuation">.</span><span class="token operator">&lt;</span>y<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    g <span class="token operator">=</span> res <span class="token operator">+</span> y
+    ress <span class="token operator">=</span> g<span class="token punctuation">.</span>small_roots<span class="token punctuation">(</span>X<span class="token operator">=</span><span class="token number">2</span><span class="token operator">^</span><span class="token number">230</span><span class="token punctuation">,</span> beta<span class="token operator">=</span><span class="token number">0.499</span><span class="token punctuation">,</span> epsilon<span class="token operator">=</span><span class="token number">0.04</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ress <span class="token operator">!=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+        p <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>ress<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> res<span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>得到p后即可计算私钥解密得到flag：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">q <span class="token operator">=</span> n <span class="token operator">//</span> p
+phi <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>e<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>phi<span class="token punctuation">)</span>
+flag<span class="token operator">=</span>long_to_bytes<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">pow</span><span class="token punctuation">(</span>ct<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>做完了！ 完整<strong>exp</strong>：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> tqdm <span class="token keyword">import</span> <span class="token operator">*</span>
+
+n <span class="token operator">=</span> <span class="token number">127060392619341060272126983366487069092712215979664340339428955285201267724168574813227106020122399594060458777939446978632526348867806863618885370221957087197582864380885199290793062293120324984868138488667017882272415668310242448870352699380394381756621677031459335310964085476227148301120850021800822495119</span>
+e <span class="token operator">=</span> <span class="token number">65537</span>
+ct <span class="token operator">=</span><span class="token number">18305235107479382231970252522433686185039231184629854177334609960907102735540326234277108553640185845164498239822263821349544015918443334769445559622730315115384134147808359107914969010678607157349844717217781801237935737980608575612421610972048739840839726108493286994232100086338529591086935374295281642738</span>
+gift <span class="token operator">=</span> <span class="token number">8312456126096895497368692810699639462746223116345115761188530231045483000989605820</span>
+
+r <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token string">b'n1junior2025'</span><span class="token punctuation">)</span>
+G <span class="token operator">=</span> gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span>
+PR<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>RealField<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> k <span class="token keyword">in</span> trange<span class="token punctuation">(</span><span class="token number">2200</span><span class="token punctuation">,</span> <span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    f <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>x <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>x <span class="token operator">-</span> k<span class="token operator">*</span>n <span class="token operator">-</span> G
+    res <span class="token operator">=</span> f<span class="token punctuation">.</span>roots<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    res <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>res<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">230</span> <span class="token operator">&lt;&lt;</span> <span class="token number">230</span>
+    P<span class="token punctuation">.</span><span class="token operator">&lt;</span>y<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>Zmod<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    g <span class="token operator">=</span> res <span class="token operator">+</span> y
+    ress <span class="token operator">=</span> g<span class="token punctuation">.</span>small_roots<span class="token punctuation">(</span>X<span class="token operator">=</span><span class="token number">2</span><span class="token operator">^</span><span class="token number">230</span><span class="token punctuation">,</span> beta<span class="token operator">=</span><span class="token number">0.499</span><span class="token punctuation">,</span> epsilon<span class="token operator">=</span><span class="token number">0.04</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ress <span class="token operator">!=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+        p <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>ress<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> res<span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+
+q <span class="token operator">=</span> n <span class="token operator">//</span> p
+phi <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>e<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>phi<span class="token punctuation">)</span>
+flag<span class="token operator">=</span>long_to_bytes<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">pow</span><span class="token punctuation">(</span>ct<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<strong>sagemath环境</strong>运行后得到flag：</p>
+<p><code>flag{ec6f23afd0b7453bb8224146b6aad196}</code></p>
 
                 
             </div>
@@ -616,7 +526,7 @@ No.1 Funny Cipher
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://122506xianluo.github.io/1/">https://122506xianluo.github.io/1/</a>
+                    <a href="https://122506xianluo.github.io/2/">https://122506xianluo.github.io/2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,9 +607,10 @@ No.1 Funny Cipher
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2/">
                     <div class="card-image">
@@ -716,9 +627,9 @@ No.1 Funny Cipher
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-11-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-11-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -727,6 +638,7 @@ No.1 Funny Cipher
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -734,7 +646,7 @@ No.1 Funny Cipher
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/1/">
@@ -763,7 +675,6 @@ No.1 Funny Cipher
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
