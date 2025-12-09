@@ -5,11 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="122506号暹罗">
-    <meta name="description" content="                N1CTF Junior 3rd(Jeopardy)                
-No.1  CheckIn
-看看源码：
-import os
-from Crypto.Util.number import ">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;  &amp;nbsp;&amp;nbsp;N1CTF Junior 3rd(Jeopardy)&amp;nbsp;&amp;nbsp;&amp;nbsp;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -403,9 +399,7 @@ from Crypto.Util.number import ">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1>                N1CTF Junior 3rd(Jeopardy)                </h1>
-<h2 id="No-1-CheckIn">No.1  CheckIn</h2>
-<p>看看源码：</p>
+                <h1 id="nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-N1CTF-Junior-3rd-Jeopardy-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp"><a href="#nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-N1CTF-Junior-3rd-Jeopardy-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp-nbsp" class="headerlink" title="&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;N1CTF Junior 3rd(Jeopardy)&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;"></a>&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;N1CTF Junior 3rd(Jeopardy)&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;</h1><h2 id="No-1-CheckIn"><a href="#No-1-CheckIn" class="headerlink" title="No.1  CheckIn"></a>No.1  CheckIn</h2><p>看看源码：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
 <span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
 <span class="token keyword">from</span> secret <span class="token keyword">import</span> FLAG
@@ -432,16 +426,17 @@ e = 65537
 ct = 18305235107479382231970252522433686185039231184629854177334609960907102735540326234277108553640185845164498239822263821349544015918443334769445559622730315115384134147808359107914969010678607157349844717217781801237935737980608575612421610972048739840839726108493286994232100086338529591086935374295281642738
 gift = 8312456126096895497368692810699639462746223116345115761188530231045483000989605820
 '''</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这是一道经典<strong>RSA</strong>的改编</p>
 <p><strong>msg</strong>是明文，即为flag；</p>
 <p><strong>ct</strong>是密文，已给出；</p>
-<p><strong>e=65537</strong>经典公钥已给出；</p>
+<p><strong>e&#x3D;65537</strong>经典公钥已给出；</p>
 <p><strong>n</strong>是一个1024bit的数，由<strong>p</strong>和<strong>q</strong>两个随机512bit素数相乘得到</p>
 <p>利用<strong>gift</strong>(286bit)这一关键泄露信息解出<strong>p</strong>算出<strong>phi</strong>即可根据RSA的私钥计算方法解出flag</p>
 <p>现在最关键的是这一行:</p>
 <p><strong><code>gift = ((2025 * p + r * r) * p % phi) &gt;&gt; 750</code></strong></p>
 <p><strong>r</strong>由字符串生成，可直接得出；所以这里就变成了一个可以解出p的方程；</p>
-<p><strong>gift</strong>有286位，理论上可解出<strong>p</strong>的高286位，剩下的512-286=226可以用<strong>Coppersmith</strong>直接得出</p>
+<p><strong>gift</strong>有286位，理论上可解出<strong>p</strong>的高286位，剩下的512-286&#x3D;226可以用<strong>Coppersmith</strong>直接得出</p>
 <p>开始构造多项式：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token number">1</span><span class="token punctuation">.</span>gift <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> phi<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">750</span>       <span class="token comment">#原式</span>
 <span class="token number">2</span><span class="token punctuation">.</span>gift <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> n <span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">750</span>   
@@ -450,6 +445,7 @@ gift = 8312456126096895497368692810699639462746223116345115761188530231045483000
 <span class="token number">3</span><span class="token punctuation">.</span>gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">%</span> n           <span class="token comment">#换为gift左移</span>
 <span class="token number">4</span><span class="token punctuation">.</span>gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>p <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>p <span class="token operator">-</span> k<span class="token operator">*</span>n         <span class="token comment">#改写余数方程 k为倍数</span>
 <span class="token number">5</span><span class="token punctuation">.</span>f<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2025</span><span class="token operator">*</span>x <span class="token operator">+</span> r<span class="token operator">*</span>r<span class="token punctuation">)</span><span class="token operator">*</span>x <span class="token operator">-</span> k<span class="token operator">*</span>n <span class="token operator">-</span> gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span>  <span class="token comment">#构造完成 解出根即为p</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>就可以使用<strong>Coppersmith</strong>还原p：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">G <span class="token operator">=</span> gift <span class="token operator">&lt;&lt;</span> <span class="token number">750</span>
 PR<span class="token punctuation">.</span><span class="token operator">&lt;</span>x<span class="token operator">></span> <span class="token operator">=</span> PolynomialRing<span class="token punctuation">(</span>RealField<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -464,11 +460,13 @@ PR<span class="token punctuation">.</span><span class="token operator">&lt;</spa
         <span class="token keyword">print</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
         p <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>ress<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> res<span class="token punctuation">)</span>
         <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>得到p后即可计算私钥解密得到flag：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">q <span class="token operator">=</span> n <span class="token operator">//</span> p
 phi <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
 d <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>e<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>phi<span class="token punctuation">)</span>
 flag<span class="token operator">=</span>long_to_bytes<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">pow</span><span class="token punctuation">(</span>ct<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>做完了！ 完整<strong>exp</strong>：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
 <span class="token keyword">from</span> tqdm <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -498,8 +496,118 @@ phi <span class="token operator">=</span> <span class="token punctuation">(</spa
 d <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>e<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>phi<span class="token punctuation">)</span>
 flag<span class="token operator">=</span>long_to_bytes<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">pow</span><span class="token punctuation">(</span>ct<span class="token punctuation">,</span> d<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在<strong>sagemath环境</strong>运行后得到flag：</p>
 <p><code>flag{ec6f23afd0b7453bb8224146b6aad196}</code></p>
+<hr>
+<h2 id="No-2-BabyAES"><a href="#No-2-BabyAES" class="headerlink" title="No.2 BabyAES"></a>No.2 BabyAES</h2><p>look look 源码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Cipher <span class="token keyword">import</span> AES
+<span class="token keyword">from</span> random <span class="token keyword">import</span> randbytes
+<span class="token keyword">import</span> os
+
+FLAG <span class="token operator">=</span> <span class="token string">"flag&#123;REDACTED&#125;"</span>
+pad <span class="token operator">=</span> <span class="token keyword">lambda</span> x<span class="token punctuation">:</span> x<span class="token operator">+</span>randbytes<span class="token punctuation">(</span><span class="token number">16</span><span class="token operator">-</span><span class="token builtin">len</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">%</span><span class="token number">16</span><span class="token punctuation">)</span>
+cipher <span class="token operator">=</span> AES<span class="token punctuation">.</span>new<span class="token punctuation">(</span>os<span class="token punctuation">.</span>urandom<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span> AES<span class="token punctuation">.</span>MODE_CBC<span class="token punctuation">,</span> iv<span class="token operator">=</span>randbytes<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> ROUND <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    msg <span class="token operator">=</span> pad<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"msg: "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    cts <span class="token operator">=</span> <span class="token punctuation">[</span>cipher<span class="token punctuation">.</span>encrypt<span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">,</span> randbytes<span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    decision <span class="token operator">=</span> os<span class="token punctuation">.</span>urandom<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">&amp;</span><span class="token number">1</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"ct:"</span><span class="token punctuation">,</span> cts<span class="token punctuation">[</span>decision<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">assert</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"[+] "</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">str</span><span class="token punctuation">(</span>decision<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Congrats! 🚩 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>FLAG<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>很容易知道加密方式为<strong>AES-CBC</strong>，前面好像遇到过一次😍</p>
+<p>❤️这个程序是一个<strong>交互式</strong>的逻辑：</p>
+<p> 1.提取你的输入，并利用<strong>randbytes( )<strong>将其长度补成16字节的倍数(<em><strong>pad</strong></em>)，作为</strong>明文</strong>(msg)</p>
+<p> 2.用**os.urandom( )<strong>生成密钥，用</strong>randbytes(16)**生成初始向量，创造一个AES-CBC加密</p>
+<p> 3.创造了一个<strong>cts列表</strong>，其中有 <strong>①</strong>msg经该AES-CBC加密生成的密文 <strong>②</strong>由**randbytes(len(msg))**生成的随机数</p>
+<p> 4.程序输出①或② 你需要判断输出的是哪个 并输入 <strong>0 或 1</strong> 选择 </p>
+<p> 5.循环 <strong>128</strong> 次输入以及判断全对 就可以输出flag</p>
+<p>🤓这里的突破口便是伪随机数的生成：</p>
+<p>上述的<strong>os.urandom( )<strong>和</strong>randbytes (</strong>)生成原理都依靠<strong>MT19937 算法</strong></p>
+<p>MT19937 算法的内部有 624 个 32 bit 的状态（总共 19968 bit）</p>
+<p>当它生成数时若大于 32 bit 会用多组32 bit数组合生成伪随机数</p>
+<p>只要知道 624 个 32bit 输出就能获取 MT19937 的内部状态</p>
+<p>因此我们输入一个 2480 字节 的数 经过pad后 为2496字节 刚好是19968 bit</p>
+<p>若程序刚好输出cts[1] 我们就能推断MT19937 的内部状态</p>
+<p>就能掌握之后随机数的生成规律 进行最后127次判断 得到flag</p>
+<p>✨实现：</p>
+<p>进行交互 提取文本：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">sh <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"python"</span><span class="token punctuation">,</span><span class="token string">"./task.py"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>        
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"msg: "</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>urandom<span class="token punctuation">(</span><span class="token number">19968</span><span class="token operator">//</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"ct:"</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"[+] "</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"1"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(因为第一轮可能会输出cts[0]，所以要多运行几次脚本才能出答案)</p>
+<p>传入624*32&#x3D;19968bits的数进行随机数预测准备：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">predictor <span class="token operator">=</span> ExtendMT19937Predictor<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">624</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    
+    x <span class="token operator">=</span> res <span class="token operator">&amp;</span> <span class="token number">0xffffffff</span>
+    res <span class="token operator">>></span><span class="token operator">=</span> <span class="token number">32</span>
+    predictor<span class="token punctuation">.</span>setrandbits<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>进行判断：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> trange<span class="token punctuation">(</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"msg: "</span><span class="token punctuation">)</span>
+    predictor<span class="token punctuation">.</span>predict_getrandbits<span class="token punctuation">(</span><span class="token number">16</span><span class="token operator">*</span><span class="token number">8</span><span class="token punctuation">)</span>                 <span class="token comment"># pad调用了randbytes，填充了16*8bits也需要算上</span>
+    temp <span class="token operator">=</span> predictor<span class="token punctuation">.</span>predict_getrandbits<span class="token punctuation">(</span><span class="token number">19968</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>urandom<span class="token punctuation">(</span><span class="token number">19968</span><span class="token operator">//</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"ct:"</span><span class="token punctuation">)</span>
+    res <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"[+] "</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>res <span class="token operator">==</span> temp<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"0"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>🎈完成 放上<strong>exp</strong>：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> extend_mt19937_predictor <span class="token keyword">import</span> ExtendMT19937Predictor
+<span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> tqdm <span class="token keyword">import</span> trange
+<span class="token keyword">from</span> os <span class="token keyword">import</span> urandom
+
+context<span class="token punctuation">.</span>log_level <span class="token operator">=</span> <span class="token string">"critical"</span>
+sh <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"python"</span><span class="token punctuation">,</span><span class="token string">"./task.py"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"msg: "</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>urandom<span class="token punctuation">(</span><span class="token number">19968</span><span class="token operator">//</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"ct:"</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"[+] "</span><span class="token punctuation">)</span>
+sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"1"</span><span class="token punctuation">)</span>
+
+
+predictor <span class="token operator">=</span> ExtendMT19937Predictor<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">624</span><span class="token punctuation">)</span><span class="token punctuation">:</span>    
+    x <span class="token operator">=</span> res <span class="token operator">&amp;</span> <span class="token number">0xffffffff</span>
+    res <span class="token operator">>></span><span class="token operator">=</span> <span class="token number">32</span>
+    predictor<span class="token punctuation">.</span>setrandbits<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> trange<span class="token punctuation">(</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"msg: "</span><span class="token punctuation">)</span>
+    predictor<span class="token punctuation">.</span>predict_getrandbits<span class="token punctuation">(</span><span class="token number">16</span><span class="token operator">*</span><span class="token number">8</span><span class="token punctuation">)</span> 
+    temp <span class="token operator">=</span> predictor<span class="token punctuation">.</span>predict_getrandbits<span class="token punctuation">(</span><span class="token number">19968</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>urandom<span class="token punctuation">(</span><span class="token number">19968</span><span class="token operator">//</span><span class="token number">8</span><span class="token operator">-</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"ct:"</span><span class="token punctuation">)</span>
+    res <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    sh<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">b"[+] "</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>res <span class="token operator">==</span> temp<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">b"0"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>sh<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
